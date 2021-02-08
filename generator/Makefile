@@ -43,7 +43,8 @@ WIENER_URL        := https://file.wiener-d.com/software/net-snmp/WIENER-CRATE-MI
 RARITAN_URL       := http://cdn.raritan.com/download/PX/v1.5.20/PDU-MIB.txt
 INFRAPOWER_URL    := https://www.austin-hughes.com/support/software/infrapower/IPD-MIB.7z
 LIEBERT_URL       := https://www.vertiv.com/492204/contentassets/b00273585e0a453a9c983523e8a0d6ff/lgpmib-unix_rev16.tar
-GUDE_URL          := https://hoffan.rezel.enst.fr/rezel/observium/-/raw/b73362bc06637771609c1fea730ff0d00e001216/mibs/gude/GUDEADS-EPC8X-MIB
+GUDE_EPC8X_URL    := https://hoffan.rezel.enst.fr/rezel/observium/-/raw/b73362bc06637771609c1fea730ff0d00e001216/mibs/gude/GUDEADS-EPC8X-MIB
+GUDE_EPC8210_URL  := http://demo.gude.info/epc/8210/GUDEADS-EPC8210-MIB.txt
 
 .DEFAULT: all
 
@@ -109,7 +110,8 @@ mibs: mib-dir \
   $(MIBDIR)/PDU-MIB.txt \
   $(MIBDIR)/IPD-MIB_Q419V9.mib \
   $(MIBDIR)/LIEBERT_GP_PDU.MIB \
-  $(MIBDIR)/GUDEADS-EPC8X-MIB.txt
+  $(MIBDIR)/GUDEADS-EPC8X-MIB.txt \
+  $(MIBDIR)/GUDEADS-EPC8210-MIB.txt
 
 mib-dir:
 	@mkdir -p -v $(MIBDIR)
@@ -275,4 +277,9 @@ $(MIBDIR)/LIEBERT_GP_PDU.MIB:
 
 $(MIBDIR)/GUDEADS-EPC8X-MIB.txt:
 	@echo ">> Downloading GUDE-MIB"
-	@curl $(CURL_OPTS) -o $(MIBDIR)/GUDEADS-EPC8X-MIB.txt "$(GUDE_URL)"
+	@curl $(CURL_OPTS) -o $(MIBDIR)/GUDEADS-EPC8X-MIB.txt "$(GUDE_EPC8X_URL)"
+
+$(MIBDIR)/GUDEADS-EPC8210-MIB.txt:
+	@echo ">> Downloading GUDE-MIB"
+	@curl $(CURL_OPTS) -o $(MIBDIR)/GUDEADS-EPC8210-MIB.txt "$(GUDE_EPC8210_URL)"
+
