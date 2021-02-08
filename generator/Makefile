@@ -67,6 +67,7 @@ CISCO_CUCS_URL    := https://raw.githubusercontent.com/cisco/cisco-mibs/refs/hea
 CISCO_CUCS_URL_v2 := https://raw.githubusercontent.com/cisco/cisco-mibs/refs/heads/main/v2
 CYBERPOWER_VERSION := 2.11
 CYBERPOWER_URL     := https://dl4jz3rbrsfum.cloudfront.net/software/CyberPower_MIB_v$(CYBERPOWER_VERSION).MIB.zip
+GUDE_URL          := https://hoffan.rezel.enst.fr/rezel/observium/-/raw/b73362bc06637771609c1fea730ff0d00e001216/mibs/gude/GUDEADS-EPC8X-MIB
 
 EAP_VERSION := 1.0
 EAP_URL     := http://static.tp-link.com/EAP_Private_Mibs_$(EAP_VERSION).zip
@@ -163,7 +164,8 @@ mibs: \
   $(MIBDIR)/EAP.MIB \
   $(MIBDIR)/EAP-Client.MIB \
   $(MIBDIR)/powercom \
-  $(MIBDIR)/.cisco_imc
+  $(MIBDIR)/.cisco_imc \
+  $(MIBDIR)/GUDEADS-EPC8X-MIB.txt
 
 $(MIBDIR)/apc-powernet-mib:
 	@echo ">> Downloading apc-powernet-mib" 
@@ -427,3 +429,7 @@ $(MIBDIR)/.cisco_imc:
 	@curl $(CURL_OPTS) -o $(MIBDIR)/CISCO-TC.my "$(CISCO_CUCS_URL_v2)/CISCO-TC.my"
 	@curl $(CURL_OPTS) -o $(MIBDIR)/CISCO-SMI.my "$(CISCO_CUCS_URL_v2)/CISCO-SMI.my"
 	@touch $(MIBDIR)/.cisco_imc
+
+$(MIBDIR)/GUDEADS-EPC8X-MIB.txt:
+	@echo ">> Downloading GUDE-MIB"
+	@curl $(CURL_OPTS) -o $(MIBDIR)/GUDEADS-EPC8X-MIB.txt "$(GUDE_URL)"
