@@ -67,7 +67,8 @@ CISCO_CUCS_URL    := https://raw.githubusercontent.com/cisco/cisco-mibs/refs/hea
 CISCO_CUCS_URL_v2 := https://raw.githubusercontent.com/cisco/cisco-mibs/refs/heads/main/v2
 CYBERPOWER_VERSION := 2.11
 CYBERPOWER_URL     := https://dl4jz3rbrsfum.cloudfront.net/software/CyberPower_MIB_v$(CYBERPOWER_VERSION).MIB.zip
-GUDE_URL          := https://hoffan.rezel.enst.fr/rezel/observium/-/raw/b73362bc06637771609c1fea730ff0d00e001216/mibs/gude/GUDEADS-EPC8X-MIB
+GUDE_EPC8X_URL    := https://hoffan.rezel.enst.fr/rezel/observium/-/raw/b73362bc06637771609c1fea730ff0d00e001216/mibs/gude/GUDEADS-EPC8X-MIB
+GUDE_EPC8210_URL  := http://demo.gude.info/epc/8210/GUDEADS-EPC8210-MIB.txt
 
 EAP_VERSION := 1.0
 EAP_URL     := http://static.tp-link.com/EAP_Private_Mibs_$(EAP_VERSION).zip
@@ -165,7 +166,8 @@ mibs: \
   $(MIBDIR)/EAP-Client.MIB \
   $(MIBDIR)/powercom \
   $(MIBDIR)/.cisco_imc \
-  $(MIBDIR)/GUDEADS-EPC8X-MIB.txt
+  $(MIBDIR)/GUDEADS-EPC8X-MIB.txt \
+  $(MIBDIR)/GUDEADS-EPC8210-MIB.txt
 
 $(MIBDIR)/apc-powernet-mib:
 	@echo ">> Downloading apc-powernet-mib" 
@@ -432,4 +434,9 @@ $(MIBDIR)/.cisco_imc:
 
 $(MIBDIR)/GUDEADS-EPC8X-MIB.txt:
 	@echo ">> Downloading GUDE-MIB"
-	@curl $(CURL_OPTS) -o $(MIBDIR)/GUDEADS-EPC8X-MIB.txt "$(GUDE_URL)"
+	@curl $(CURL_OPTS) -o $(MIBDIR)/GUDEADS-EPC8X-MIB.txt "$(GUDE_EPC8X_URL)"
+
+$(MIBDIR)/GUDEADS-EPC8210-MIB.txt:
+	@echo ">> Downloading GUDE-MIB"
+	@curl $(CURL_OPTS) -o $(MIBDIR)/GUDEADS-EPC8210-MIB.txt "$(GUDE_EPC8210_URL)"
+
