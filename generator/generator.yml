@@ -917,10 +917,9 @@ modules:
     - 1.3.6.1.4.1.9.9.719.1.1.1.1.11  #cucsFaultDescription
     - 1.3.6.1.4.1.9.9.719.1.1.1.1.20  #cucsFaultSeverity
 
-# GUDE PDU
+# GUDE PDU 8210/8211
 # http://wiki.gude.info/FAQ_EPC_SNMP
-# Taking mib from https://hoffan.rezel.enst.fr/rezel/observium/-/raw/b73362bc06637771609c1fea730ff0d00e001216/mibs/gude/GUDEADS-EPC8X-MIB as
-# the link from the manufacturer ( https://www.gude.info/files/software/GUDEADS-EPC8X-MIB.txt ) does not work.
+# http://demo.gude.info/epc/8210/GUDEADS-EPC8210-MIB.txt
   gudeads_mib:
     walk:
       - sysUpTime
@@ -931,6 +930,10 @@ modules:
     lookups:
       - source_indexes: [epc8PortIndex]
         lookup: epc8PortName
+      - source_indexes: [epc8210PortIndex]
+        lookup: epc8210PortName
     overrides:
       epc8PortName:
+        type: DisplayString
+      epc8210PortName:
         type: DisplayString
