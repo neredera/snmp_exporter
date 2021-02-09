@@ -69,6 +69,8 @@ CYBERPOWER_VERSION := 2.11
 CYBERPOWER_URL     := https://dl4jz3rbrsfum.cloudfront.net/software/CyberPower_MIB_v$(CYBERPOWER_VERSION).MIB.zip
 GUDE_EPC8X_URL    := https://hoffan.rezel.enst.fr/rezel/observium/-/raw/b73362bc06637771609c1fea730ff0d00e001216/mibs/gude/GUDEADS-EPC8X-MIB
 GUDE_EPC8210_URL  := http://demo.gude.info/epc/8210/GUDEADS-EPC8210-MIB.txt
+FREENAS_URL       := https://raw.githubusercontent.com/freenas/freenas/master/src/freenas/usr/local/share/snmp/mibs/FREENAS-MIB.txt
+FREENAS_LM_URL    := https://raw.githubusercontent.com/freenas/freenas/master/src/freenas/usr/local/share/snmp/mibs/LM-SENSORS-MIB.txt
 
 EAP_VERSION := 1.0
 EAP_URL     := http://static.tp-link.com/EAP_Private_Mibs_$(EAP_VERSION).zip
@@ -167,7 +169,9 @@ mibs: \
   $(MIBDIR)/powercom \
   $(MIBDIR)/.cisco_imc \
   $(MIBDIR)/GUDEADS-EPC8X-MIB.txt \
-  $(MIBDIR)/GUDEADS-EPC8210-MIB.txt
+  $(MIBDIR)/GUDEADS-EPC8210-MIB.txt \
+  $(MIBDIR)/FREENAS-MIB.txt \
+  $(MIBDIR)/LM-SENSORS-MIB.txt
 
 $(MIBDIR)/apc-powernet-mib:
 	@echo ">> Downloading apc-powernet-mib" 
@@ -440,3 +444,10 @@ $(MIBDIR)/GUDEADS-EPC8210-MIB.txt:
 	@echo ">> Downloading GUDE-MIB"
 	@curl $(CURL_OPTS) -o $(MIBDIR)/GUDEADS-EPC8210-MIB.txt "$(GUDE_EPC8210_URL)"
 
+$(MIBDIR)/FREENAS-MIB.txt:
+	@echo ">> Downloading FreeNAS-MIB"
+	@curl $(CURL_OPTS) -o $(MIBDIR)/FREENAS-MIB.txt "$(FREENAS_URL)"
+
+$(MIBDIR)/LM-SENSORS-MIB.txt:
+	@echo ">> Downloading FreeNAS-Sensors-MIB"
+	@curl $(CURL_OPTS) -o $(MIBDIR)/LM-SENSORS-MIB.txt "$(FREENAS_LM_URL)"
