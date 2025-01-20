@@ -981,7 +981,7 @@ modules:
 
 # Printer that only support SNMPv1
   printer_v1_mib:
-    version: 1
+#    version: 1
     walk:
       - sysUpTime
       - sysDescr
@@ -1097,7 +1097,7 @@ modules:
               value: '$1'
 
   printer_v1_mib_full:
-    version: 1
+#    version: 1
     walk:
       - sysUpTime
       - sysDescr
