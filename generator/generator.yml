@@ -910,6 +910,7 @@ modules:
     - 1.3.6.1.4.1.9.9.719.1.1.1.1.11  #cucsFaultDescription
     - 1.3.6.1.4.1.9.9.719.1.1.1.1.20  #cucsFaultSeverity
 
+
 # GUDE PDU 8210/8211
 # http://wiki.gude.info/FAQ_EPC_SNMP
 # http://demo.gude.info/epc/8210/GUDEADS-EPC8210-MIB.txt
@@ -930,6 +931,7 @@ modules:
         type: DisplayString
       epc8210PortName:
         type: DisplayString
+
 # FreeNAS
   freenas_mib:
     walk:
@@ -970,4 +972,282 @@ modules:
       ifName:
         ignore: true # Lookup metric
 
+# Printer that only support SNMPv1
+  printer_v1_mib:
+    version: 1
+    walk:
+      - sysUpTime
+      - sysDescr
+      - interfaces
+      - ifXTable
+      - hrPrinterStatus
+      - prtMarker # contains pages printed
+      - prtCover  # info about open flaps
+      - prtMarkerSupplies # ink
+      - usageBeltCurrentLevel # OKI specific first
+      - usageDrumDescription
+      - usageDrumCurrentLevel
+      - usageFuserCurrentLevel
+      - usageTrayDescription
+      - usageTrayCounter
+      - usagePrinterUnitCounter
+      - usageTonerDescription
+      - usageTonerDotCountCurrentLevel
+      - cfgmfpSystemPrintTotalPages
+      - cfgmfpSystemPrintColorPages
+      - cfgmfpSystemPrintMonochroPages
+      - cfgmfpScanTotalPages
+      - cfgmfpScanAdfTotalPages # OKI specific last
+    lookups: # lookups do not work
+#      - source_indexes: [prtMarkerSuppliesIndex]
+#        lookup: prtMarkerSuppliesDescription
+        #drop_source_indexes: true
+#      - source_indexes: [prtCoverIndex]
+#        lookup: prtCoverDescription
+        #drop_source_indexes: true
+      - source_indexes: [usageTonerIndex]
+        lookup: usageTonerDescription
+      - source_indexes: [usageTrayIndex]
+        lookup: usageTrayDescription
+      - source_indexes: [usageDrumIndex]
+        lookup: usageDrumDescription
+    overrides:
+      hrPrinterStatus:
+        type: EnumAsStateSet
+      prtCoverDescription:
+        type: DisplayString
+      prtMarkerSuppliesDescription:
+        type: DisplayString
+      prtMarkerSuppliesClass:
+        type: EnumAsInfo
+        ignore: true
+      prtMarkerSuppliesType:
+        type: EnumAsInfo
+      prtCoverStatus:
+        type: EnumAsInfo
+      prtMarkerSuppliesIndex:
+        ignore: true # Lookup metric
+      usageDrumDescription:
+        ignore: true # Lookup metric
+      usageTonerDescription:
+        ignore: true # Lookup metric
+      usageTrayDescription:
+        ignore: true # Lookup metric
+      usageTrayCounter: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      usageBeltCurrentLevel: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      usageDrumCurrentLevel: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      usageFuserCurrentLevel: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      usagePrinterUnitCounter: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      usageTonerDotCountCurrentLevel: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      cfgmfpSystemPrintTotalPages: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      cfgmfpSystemPrintColorPages: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      cfgmfpSystemPrintMonochroPages: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      cfgmfpScanTotalPages: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      cfgmfpScanAdfTotalPages: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
 
+  printer_v1_mib_full:
+    version: 1
+    walk:
+      - sysUpTime
+      - sysDescr
+      - interfaces
+      - ifXTable
+      - hrPrinterStatus
+      - 1.3.6.1.4.1.2001 # OKIDATA
+      # - usageBeltCurrentLevel
+      # - usageDrumDescription
+      # - usageDrumCurrentLevel
+      # - usageFuserCurrentLevel
+      # - usageTrayDescription
+      # - usageTrayCounter
+      # - usagePrinterUnitCounter
+      # - usageTonerDescription
+      # - usageTonerDotCountCurrentLevel
+      # - cfgmfpSystemPrintTotalPages
+      # - cfgmfpSystemPrintColorPages
+      # - cfgmfpSystemPrintMonochroPages
+      # - cfgmfpScanTotalPages
+      # - cfgmfpScanAdfTotalPages
+      - printmib  # complete infoset, but slow with SNMPv1
+#      - prtMarker # contains pages printed
+#      - prtCover  # info about open flaps
+#      - prtMarkerSupplies # ink
+    lookups: # lookups do not work
+#      - source_indexes: [prtMarkerSuppliesIndex]
+#        lookup: prtMarkerSuppliesDescription
+        #drop_source_indexes: true
+#      - source_indexes: [prtCoverIndex]
+#        lookup: prtCoverDescription
+        #drop_source_indexes: true
+      - source_indexes: [usageTonerIndex]
+        lookup: usageTonerDescription
+      - source_indexes: [usageTrayIndex]
+        lookup: usageTrayDescription
+      - source_indexes: [usageDrumIndex]
+        lookup: usageDrumDescription
+    overrides:
+      hrPrinterStatus:
+        type: EnumAsStateSet
+      prtCoverDescription:
+        type: DisplayString
+      prtMarkerSuppliesDescription:
+        type: DisplayString
+      prtMarkerSuppliesClass:
+        type: EnumAsInfo
+        ignore: true
+      prtMarkerSuppliesType:
+        type: EnumAsInfo
+      prtCoverStatus:
+        type: EnumAsInfo
+      prtMarkerSuppliesIndex:
+        ignore: true # Lookup metric
+      usageDrumDescription:
+        ignore: true # Lookup metric
+      usageTonerDescription:
+        ignore: true # Lookup metric
+      usageTrayDescription:
+        ignore: true # Lookup metric
+      usageTrayCounter: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      usageBeltCurrentLevel: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      usageDrumCurrentLevel: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      usageFuserCurrentLevel: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      usagePrinterUnitCounter: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      usageTonerDotCountCurrentLevel: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      cfgmfpSystemPrintTotalPages: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      cfgmfpSystemPrintColorPages: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      cfgmfpSystemPrintMonochroPages: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      cfgmfpScanTotalPages: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+      cfgmfpScanAdfTotalPages: # the device returns a string, convert to value
+        regex_extracts:
+          Value:
+            - regex: '(.*)'
+              value: '$1'
+
+# VMWare ESXi (for standalone hosts without vSphere)
+  vmware_esxi_mib:
+    walk:
+      - sysUpTime
+      - sysDescr
+      - interfaces
+      - ifXTable
+      - hrSystem
+      - hrDiskStorageTable
+      - hrStorage
+      - hrMemorySize
+      - vmwSystem
+      - hrProcessorLoad
+      - hrDevice
+      - vmwVmTable
+    lookups:
+      - source_indexes: [ifIndex]
+        # Use OID to avoid conflict with Netscaler NS-ROOT-MIB.
+        lookup: 1.3.6.1.2.1.31.1.1.1.1 # ifName
+      - source_indexes: [hrDeviceIndex]
+        lookup: hrDeviceDescr
+      - source_indexes: [hrFSIndex]
+        lookup: hrFSMountPoint
+        drop_source_indexes: true
+      - source_indexes: [hrStorageIndex]
+        lookup: hrStorageDescr
+        drop_source_indexes: true
+      - source_indexes: [vmwVmIdx]
+        lookup: vmwVmDisplayName
+    overrides:
+      ifType:
+        type: EnumAsInfo
+      hrFSMountPoint:
+        type: DisplayString
+      hrSWInstalledName:
+        type: DisplayString
+      hrSWRunName:
+        type: DisplayString
+      hrSWRunParameters:
+        type: DisplayString
+      hrSWRunPath:
+        type: DisplayString
+      ifName:
+        ignore: true # Lookup metric
