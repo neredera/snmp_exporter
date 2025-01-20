@@ -69,8 +69,7 @@ CYBERPOWER_VERSION := 2.11
 CYBERPOWER_URL     := https://dl4jz3rbrsfum.cloudfront.net/software/CyberPower_MIB_v$(CYBERPOWER_VERSION).MIB.zip
 GUDE_EPC8X_URL    := https://mibbrowser.online/mibs/GUDEADS-EPC8X-MIB.mib
 GUDE_EPC8210_URL  := http://demo.gude.info/epc/8210/GUDEADS-EPC8210-MIB.txt
-FREENAS_URL       := https://raw.githubusercontent.com/freenas/freenas/master/src/freenas/usr/local/share/snmp/mibs/FREENAS-MIB.txt
-FREENAS_LM_URL    := https://raw.githubusercontent.com/freenas/freenas/master/src/freenas/usr/local/share/snmp/mibs/LM-SENSORS-MIB.txt
+FREENAS_URL       := https://raw.githubusercontent.com/truenas/middleware/refs/heads/master/src/freenas/usr/local/share/snmp/mibs/TRUENAS-MIB.txt
 #OKIDATA_URL       := http://www.circitor.fr/Mibs/Mib/O/OKIDATA-MIB.mib   # Version from 2000.05.12
 OKIDATA_URL       := https://content.spiceworksstatic.com/service.community/p/post_attachments/0000046926/4dbe25b9/attached_file/OKIDAT31.asn  # Version from 2007.12.13
 VMROOT_URL        := http://www.circitor.fr/Mibs/Mib/V/VMWARE-ROOT-MIB.mib
@@ -456,10 +455,6 @@ $(MIBDIR)/GUDEADS-EPC8210-MIB.txt:
 $(MIBDIR)/FREENAS-MIB.txt:
 	@echo ">> Downloading FreeNAS-MIB"
 	@curl $(CURL_OPTS) -o $(MIBDIR)/FREENAS-MIB.txt "$(FREENAS_URL)"
-
-$(MIBDIR)/LM-SENSORS-MIB.txt:
-	@echo ">> Downloading FreeNAS-Sensors-MIB"
-	@curl $(CURL_OPTS) -o $(MIBDIR)/LM-SENSORS-MIB.txt "$(FREENAS_LM_URL)"
 
 $(MIBDIR)/OKIDATA-MIB.mib:
 	@echo ">> Downloading OKIDATA MIB"
