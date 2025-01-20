@@ -71,6 +71,11 @@ GUDE_EPC8X_URL    := https://hoffan.rezel.enst.fr/rezel/observium/-/raw/b73362bc
 GUDE_EPC8210_URL  := http://demo.gude.info/epc/8210/GUDEADS-EPC8210-MIB.txt
 FREENAS_URL       := https://raw.githubusercontent.com/freenas/freenas/master/src/freenas/usr/local/share/snmp/mibs/FREENAS-MIB.txt
 FREENAS_LM_URL    := https://raw.githubusercontent.com/freenas/freenas/master/src/freenas/usr/local/share/snmp/mibs/LM-SENSORS-MIB.txt
+#OKIDATA_URL       := http://www.circitor.fr/Mibs/Mib/O/OKIDATA-MIB.mib   # Version from 2000.05.12
+OKIDATA_URL       := https://content.spiceworksstatic.com/service.community/p/post_attachments/0000046926/4dbe25b9/attached_file/OKIDAT31.asn  # Version from 2007.12.13
+VMROOT_URL        := http://www.circitor.fr/Mibs/Mib/V/VMWARE-ROOT-MIB.mib
+VMINFO_URL        := http://www.circitor.fr/Mibs/Mib/V/VMWARE-VMINFO-MIB.mib
+VMSYSTEM_URL      := http://www.circitor.fr/Mibs/Mib/V/VMWARE-SYSTEM-MIB.mib
 
 EAP_VERSION := 1.0
 EAP_URL     := http://static.tp-link.com/EAP_Private_Mibs_$(EAP_VERSION).zip
@@ -171,7 +176,11 @@ mibs: \
   $(MIBDIR)/GUDEADS-EPC8X-MIB.txt \
   $(MIBDIR)/GUDEADS-EPC8210-MIB.txt \
   $(MIBDIR)/FREENAS-MIB.txt \
-  $(MIBDIR)/LM-SENSORS-MIB.txt
+  $(MIBDIR)/LM-SENSORS-MIB.txt \
+  $(MIBDIR)/OKIDATA-MIB.mib \
+  $(MIBDIR)/VMWARE-ROOT-MIB.mib \
+  $(MIBDIR)/VMWARE-VMINFO-MIB.mib \
+  $(MIBDIR)/VMWARE-SYSTEM-MIB.mib
 
 $(MIBDIR)/apc-powernet-mib:
 	@echo ">> Downloading apc-powernet-mib" 
@@ -451,3 +460,19 @@ $(MIBDIR)/FREENAS-MIB.txt:
 $(MIBDIR)/LM-SENSORS-MIB.txt:
 	@echo ">> Downloading FreeNAS-Sensors-MIB"
 	@curl $(CURL_OPTS) -o $(MIBDIR)/LM-SENSORS-MIB.txt "$(FREENAS_LM_URL)"
+
+$(MIBDIR)/OKIDATA-MIB.mib:
+	@echo ">> Downloading OKIDATA MIB"
+	@curl $(CURL_OPTS) -o $(MIBDIR)/OKIDATA-MIB.mib "$(OKIDATA_URL)"
+
+$(MIBDIR)/VMWARE-ROOT-MIB.mib:
+	@echo ">> Downloading VMWARE-ROOT-MIB.mib"
+	@curl $(CURL_OPTS) -o $(MIBDIR)/VMWARE-ROOT-MIB.mib "$(VMROOT_URL)"
+
+$(MIBDIR)/VMWARE-VMINFO-MIB.mib:
+	@echo ">> Downloading VMWARE-VMINFO-MIB.mib"
+	@curl $(CURL_OPTS) -o $(MIBDIR)/VMWARE-VMINFO-MIB.mib "$(VMINFO_URL)"
+
+$(MIBDIR)/VMWARE-SYSTEM-MIB.mib:
+	@echo ">> Downloading VMWARE-SYSTEM-MIB.mib"
+	@curl $(CURL_OPTS) -o $(MIBDIR)/VMWARE-SYSTEM-MIB.mib "$(VMSYSTEM_URL)"
