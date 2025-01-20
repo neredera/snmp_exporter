@@ -71,7 +71,8 @@ GUDE_EPC8X_URL    := https://mibbrowser.online/mibs/GUDEADS-EPC8X-MIB.mib
 GUDE_EPC8210_URL  := http://demo.gude.info/epc/8210/GUDEADS-EPC8210-MIB.txt
 FREENAS_URL       := https://raw.githubusercontent.com/truenas/middleware/refs/heads/master/src/freenas/usr/local/share/snmp/mibs/TRUENAS-MIB.txt
 #OKIDATA_URL       := http://www.circitor.fr/Mibs/Mib/O/OKIDATA-MIB.mib   # Version from 2000.05.12
-OKIDATA_URL       := https://community.spiceworks.com/uploads/short-url/aLAC3sdm2V28CTGCoVjfNF5Xnb4.asn  # Version from 2007.12.13
+OKIDATA_URL       := https://community.spiceworks.com/uploads/short-url/aLAC3sdm2V28CTGCoVjfNF5Xnb4.asn
+  # Version from 2007.12.13
 VMROOT_URL        := http://www.circitor.fr/Mibs/Mib/V/VMWARE-ROOT-MIB.mib
 VMINFO_URL        := http://www.circitor.fr/Mibs/Mib/V/VMWARE-VMINFO-MIB.mib
 VMSYSTEM_URL      := http://www.circitor.fr/Mibs/Mib/V/VMWARE-SYSTEM-MIB.mib
